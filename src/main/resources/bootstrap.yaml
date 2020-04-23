@@ -2,6 +2,10 @@ spring:
   application:
     name: foo-service
 
+  cloud:
+    config:
+      url: http://${CONFIG_HOST:localhost}:${CONFIG_PORT:8888}
+
 eureka:
   instance:
     instance-id: ${spring.application.name}:${POD_NAME:localhost}:${server.port:8080}

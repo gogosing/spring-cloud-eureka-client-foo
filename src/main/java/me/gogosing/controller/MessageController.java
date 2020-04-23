@@ -1,5 +1,6 @@
 package me.gogosing.controller;
 
+import me.gogosing.config.ApplicationConfiguration;
 import me.gogosing.model.external.Message;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +16,12 @@ import java.util.Map;
 @RequestMapping("/v1")
 public class MessageController {
 
+    private final ApplicationConfiguration applicationConfiguration;
+
     private final RestTemplate restTemplate;
 
-    public MessageController(RestTemplate restTemplate) {
+    public MessageController(ApplicationConfiguration applicationConfiguration, RestTemplate restTemplate) {
+        this.applicationConfiguration = applicationConfiguration;
         this.restTemplate = restTemplate;
     }
 
@@ -28,7 +32,8 @@ public class MessageController {
                 .getMessage();
         return Map.of(
             "message", "Hello! I'm foo-service",
-            "external", externalMessage
+            "external", externalMessage,
+            "config", applicationConfiguration.getMessage()
         );
     }
 }
